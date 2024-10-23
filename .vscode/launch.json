@@ -1,8 +1,6 @@
 {
     "version": "0.2.0",
     "configurations": [
-      
-        
         {
             "name": "EmailService",
             "type": "coreclr",
@@ -45,7 +43,7 @@
     {
       "name": "Launch All",
       "configurations": [
-        "EmailService", "RegisterStudent", "SagaService", "StudentService"
+        "Update Databases", "EmailService", "RegisterStudent", "SagaService", "StudentService"
       ],
       "stopAll": true
     }

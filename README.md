@@ -23,6 +23,13 @@ As shown in the above image, a client will send a request to StudentService to r
 
 ## Launching the project
 
+### Database
+
 ### VSCode
 
-A Launch configuration is provided in the launch.json file (.vscode) with the necessary configurations to start all services.
+A Launch configuration is provided in the launch.json file (.vscode) with the necessary configurations to start any or all services:
+- EmailService
+- RegisterStudent
+- SagaService
+- StudentService
+- Launch All (compound)

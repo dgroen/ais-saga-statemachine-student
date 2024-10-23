@@ -2,6 +2,39 @@
     "version": "2.0.0",
     "tasks": [
     {
+      "label": "UpdateRegisterStudentDatabase",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/Scripts/prepare_local_env.sh",
+        "-s",
+        "RegisterStudent"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "UpdateStudentServiceDatabase",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/Scripts/prepare_local_env.sh",	
+        "-s",
+        "StudentService"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+        {
+      "label": "UpdateSagaServiceDatabase",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "${workspaceFolder}/Scripts/prepare_local_env.sh",
+        "-s",
+        "SagaService"
+      ],
+      "problemMatcher": "$msCompile"
+    },    
+    {
       "label": "buildEmailService",
       "type": "shell",
       "command": "dotnet",
@@ -14,6 +47,7 @@
     {
       "label": "buildRegisterStudent",
       "type": "shell",
+      "dependsOn": "UpdateRegisterStudentDatabase",
       "command": "dotnet",
       "args": [
         "build",
@@ -24,6 +58,7 @@
     {
       "label": "buildSagaService",
       "type": "shell",
+      "dependsOn": "UpdateSagaServiceDatabase",
       "command": "dotnet",
       "args": [
         "build",
@@ -34,6 +69,7 @@
     {
       "label": "buildStudentService",
       "type": "shell",
+      "dependsOn": "UpdateStudentServiceDatabase",
       "command": "dotnet",
       "args": [
         "build",
