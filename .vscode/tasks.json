@@ -1,0 +1,45 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+    {
+      "label": "buildEmailService",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "${workspaceFolder}/EmailService/EmailService.csproj"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "buildRegisterStudent",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "${workspaceFolder}/RegisterStudent/RegisterStudent.csproj"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "buildSagaService",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "${workspaceFolder}/SagaService/SagaService.csproj"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "buildStudentService",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "${workspaceFolder}/StudentService/StudentService.csproj"
+      ],
+      "problemMatcher": "$msCompile"
+    },        
+    ]
+}
