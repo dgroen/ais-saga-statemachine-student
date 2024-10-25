@@ -1,6 +1,5 @@
 ﻿using Events.StudentEvents;
 using MassTransit;
-using Microsoft.AspNetCore.SignalR.Protocol;
 
 namespace StudentService.Consumers
 {

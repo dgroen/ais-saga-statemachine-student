@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Events.SendEmailEvents;
 using Events.StudentEvents;
-using RegisterStudent.Common;
 using RegisterStudent.Models;
 using RegisterStudent.Services;
 using MassTransit;
@@ -11,7 +10,7 @@ namespace RegisterStudent.Consumers
     public class RegisterStudentConsumer : IConsumer<IRegisterStudentEvent>
     {
         // As shown, this consumer is listening to the IRegisterStudentEvent
-        // But, Student Service publish its message to the IAddStudentEvent
+        // But, Student Service publishes its message to the IAddStudentEvent
         // Here State machine will transform IAddStudentEvent to the IRegisterStudentEvent 
         private readonly IStudentInfoService _ticketInfoService;
         private readonly ILogger<RegisterStudentConsumer> _logger;

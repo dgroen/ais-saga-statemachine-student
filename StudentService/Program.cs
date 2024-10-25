@@ -12,7 +12,7 @@ builder.Services.AddControllers();
 var connectionString = builder.Configuration.GetConnectionString("DbConnection");
 builder.Services.AddDbContextPool<AppDbContext>(db => db.UseSqlServer(connectionString));
 
-// Registe MassTransit
+// Register MassTransit
 builder.Services.AddMassTransit(cfg =>
 {
     cfg.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>

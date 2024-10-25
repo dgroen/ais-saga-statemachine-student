@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using AutoMapper.Internal;
 using Events.StudentEvents;
 using MassTransit;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudentService.DTO;
 using StudentService.Models;

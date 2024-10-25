@@ -1,6 +1,5 @@
 ﻿using Events.StudentEvents;
 using MassTransit;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using StudentService.Services;
 
 namespace StudentService.Consumers
