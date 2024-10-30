@@ -360,4 +360,8 @@ MigrationBackup/
 .ionide/
 
 # Fody - auto-generated XML schema
-FodyWeavers.xsd
+FodyWeavers.xsdEmailService/appsettings.Development.json EmailService/appsettings.json MessageBrokers/appsettings.json RegisterStudent/appsettings.Development.json RegisterStudent/appsettings.json SagaService/appsettings.Development.json SagaService/appsettings.json StudentService/appsettings.Development.json StudentService/appsettings.json
+EmailService/appsettings.Development.json EmailService/appsettings.json MessageBrokers/appsettings.json RegisterStudent/appsettings.Development.json RegisterStudent/appsettings.json SagaService/appsettings.Development.json SagaService/appsettings.json StudentService/appsettings.Development.json StudentService/appsettings.json
+EmailService/appsettings.json MessageBrokers/appsettings.json RegisterStudent/appsettings.json SagaService/appsettings.json StudentService/appsettings.json
+MessageBrokers/appsettings.json
+.vscode/settings.json
