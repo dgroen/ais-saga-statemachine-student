@@ -35,7 +35,8 @@ namespace StudentService.Controllers
                 // map model to the DTO and pass the DTO object to the bus queue
                 var mapResult = _mapper.Map<ResponseStudentDTO>(res);
                 // Send to the Bus
-                var endPoint = await _bus.GetSendEndpoint(new Uri("queue:" + MessageBrokers.RabbitMQQueues.SagaBusQueue));
+                // var endPoint = await _bus.GetSendEndpoint(new Uri("queue:" + MessageBrokers.RabbitMQQueues.SagaBusQueue));
+                var endPoint = await _bus.GetSendEndpoint(new Uri("queue:" + MessageBrokers.ASBQueues.SagaBusQueue));
                 await endPoint.Send<IGETValueEvent>(new
                 {
                     StudentId = Guid.Parse(mapResult.StudentId),

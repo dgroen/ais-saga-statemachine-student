@@ -361,3 +361,13 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+RegisterStudent/_Program
+EmailService/appsettings.json
+EmailService/_Program
+SagaService/_Program
+StudentService/_Program
+StudentService/appsettings.json
+RegisterStudent/appsettings.json
+.vscode/settings.json
+SagaService/appsettings.json
+MessageBrokers/appsettings.json

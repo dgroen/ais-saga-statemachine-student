@@ -1,38 +1,21 @@
-using MassTransit;
-using MassTransit.EntityFrameworkCoreIntegration;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using SagaService.Models;
-using SagaStateMachine;
-using System.Reflection;
 
-var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("DbConnection");
-
-// Register SagaContext
-builder.Services.AddDbContextPool<AppDbContext>(db => db.UseSqlServer(connectionString));
-builder.Services.AddControllers();
-
-
-builder.Services.AddMassTransit(cfg =>
+public class Program
 {
-    cfg.AddBus(provider=> MessageBrokers.RabbitMQ.ConfigureBus(provider));
-    cfg.AddSagaStateMachine<StudentStateMachine, StudentStateData>()
-        .EntityFrameworkRepository(r =>
-        {
-            r.ConcurrencyMode = ConcurrencyMode.Pessimistic; // or use Optimistic, which requires RowVersion
+    public static void Main(string[] args)
+    {
+        CreateHostBuilder(args).Build().Run();
+    }
 
-            r.ExistingDbContext<AppDbContext>();
-        });
-});
-
-
-var app = builder.Build();
-
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+    public static IHostBuilder CreateHostBuilder(string[] args)
+    {
+        return Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
+    }
+}

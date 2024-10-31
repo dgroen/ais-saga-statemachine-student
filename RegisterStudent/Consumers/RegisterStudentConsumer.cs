@@ -12,13 +12,13 @@ namespace RegisterStudent.Consumers
         // As shown, this consumer is listening to the IRegisterStudentEvent
         // But, Student Service publishes its message to the IAddStudentEvent
         // Here State machine will transform IAddStudentEvent to the IRegisterStudentEvent 
-        private readonly IStudentInfoService _ticketInfoService;
+        private readonly IStudentInfoService _studentInfoService;
         private readonly ILogger<RegisterStudentConsumer> _logger;
         private readonly IMapper _mapper;
 
-        public RegisterStudentConsumer(IStudentInfoService ticketInfoService, ILogger<RegisterStudentConsumer> logger, IMapper mapper)
+        public RegisterStudentConsumer(IStudentInfoService studentInfoService, ILogger<RegisterStudentConsumer> logger, IMapper mapper)
         {
-            _ticketInfoService = ticketInfoService;
+            _studentInfoService = studentInfoService;
             _logger = logger;
             _mapper = mapper;
         }
@@ -32,11 +32,11 @@ namespace RegisterStudent.Consumers
                 if (data.Age < 80)
                 {
                     // Store message
-                    // Use Mapper or use a ticketinfo object directly
+                    // Use Mapper or use a studentinfo object directly
                     var mapModel = _mapper.Map<StudentInfo>(data);
 
 
-                    var res = await _ticketInfoService.AddStudentInfo(mapModel);
+                    var res = await _studentInfoService.AddStudentInfo(mapModel);
                     if (res is not null)
                     {
 

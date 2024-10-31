@@ -1,40 +1,24 @@
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+
+using Microsoft.EntityFrameworkCore;
 using RegisterStudent.Consumers;
 using RegisterStudent.Models;
 using RegisterStudent.Services;
-using MassTransit;
-using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddControllers();
-
-// Register MassTransit 
-builder.Services.AddMassTransit(cfg =>
+public class Program
 {
-    cfg.AddBus(provider => MessageBrokers.RabbitMQ.ConfigureBus(provider));
-    cfg.AddConsumer<RegisterStudentConsumer>();
-    cfg.AddConsumer<CancelSendingEmailConsumer>();
-});
+    public static void Main(string[] args)
+    {
+        CreateHostBuilder(args).Build().Run();
+    }
 
-// Connection string
-var connectionString = builder.Configuration.GetConnectionString("DbConnection");
-
-// Register AppDbContext
-builder.Services.AddDbContextPool<AppDbContext>(db => db.UseSqlServer(connectionString));
-
-// Register StudentInfo service
-builder.Services.AddScoped<IStudentInfoService, StudentInfoService>();
-
-// Register AutoMapper
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-var app = builder.Build();
-
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+    public static IHostBuilder CreateHostBuilder(string[] args)
+    {
+        return Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
+    }
+}
