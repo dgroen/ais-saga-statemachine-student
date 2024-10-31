@@ -1,4 +1,5 @@
-POST http://localhost:5000/api/student
+POST https://localhost:5001/api/student
+Content-Type: application/json
     {
   "title": "mytitle",
   "email": "pietlondon@virtualsciences.nl",

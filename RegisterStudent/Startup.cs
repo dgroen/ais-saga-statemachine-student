@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using RegisterStudent.Models;
 using RegisterStudent.Services;
 using MessageBrokers;
-using Microsoft.AspNetCore.Builder;
 
 public class Startup
 {
@@ -40,7 +39,7 @@ public class Startup
 
             switch (brokerType)
             {
-                case BrokerTypes.ASB: 
+                case BrokerTypes.ASB:
                     x.UsingAzureServiceBus((_, cfg) =>
                     {
                         cfg.Host(Configuration.GetConnectionString("AzureServiceBus"));
@@ -51,7 +50,7 @@ public class Startup
                             ep.ConfigureConsumer<RegisterStudentConsumer>(_);
                             ep.ConfigureConsumer<CancelSendingEmailConsumer>(_);
                         });
-                    }); 
+                    });
                     break;
                 case BrokerTypes.RabbitMQ:
                     x.UsingRabbitMq((context, cfg) =>
@@ -78,8 +77,6 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
-            app.UseSwagger();
-            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();

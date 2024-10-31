@@ -3,7 +3,6 @@ using SagaStateMachine;
 using Microsoft.EntityFrameworkCore;
 using SagaService.Models;
 using MessageBrokers;
-using Microsoft.AspNetCore.Builder;
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -55,8 +54,6 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
-            app.UseSwagger();
-            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();
