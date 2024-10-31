@@ -16,7 +16,7 @@ As shown in the above image, a client will send a request to StudentService to r
 - Entity Framework core
 - SQL server
 - MassTransit
-- RabbitMQ
+- RabbitMQ and/or Azure Service Bus
 - Docker
 - Postman / Thunderclient
 

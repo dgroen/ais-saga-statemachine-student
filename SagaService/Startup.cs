@@ -2,6 +2,8 @@ using MassTransit;
 using SagaStateMachine;
 using Microsoft.EntityFrameworkCore;
 using SagaService.Models;
+using MessageBrokers;
+using Microsoft.AspNetCore.Builder;
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -15,14 +17,29 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
-        
+
         var connectionString = Configuration.GetConnectionString("DbConnection");
+        BrokerTypes brokerType = (BrokerTypes)Enum.Parse(typeof(BrokerTypes),
+            Configuration.GetValue<string>("BrokerType"));
+
+
         services.AddDbContextPool<SagaContext>(db => db.UseSqlServer(connectionString));
 
         services.AddMassTransit(x =>
         {
             x.SetKebabCaseEndpointNameFormatter();
-            x.AddBus(provider=> MessageBrokers.ASB.ConfigureBus(provider));
+            switch (brokerType)
+            {
+                case BrokerTypes.ASB:
+                    x.AddBus(provider => MessageBrokers.ASB.ConfigureBus(provider));
+                    break;
+                case BrokerTypes.RabbitMQ:
+                    x.AddBus(provider => MessageBrokers.RabbitMQ.ConfigureBus(provider));
+                    break;
+                default:
+                    x.AddBus(provider => MessageBrokers.RabbitMQ.ConfigureBus(provider));
+                    break;
+            }            
             x.AddSagaStateMachine<StudentStateMachine, StudentStateData>()
                 .EntityFrameworkRepository(r =>
                 {
@@ -38,10 +55,10 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
-            // app.UseOpenApi();
-            // app.UseSwaggerUi();
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
-        
+
         app.UseHttpsRedirection();
 
         app.UseRouting();

@@ -1,0 +1,7 @@
+POST http://localhost:5000/api/student
+    {
+  "title": "mytitle",
+  "email": "pietlondon@virtualsciences.nl",
+  "age": 41,
+  "location": "Lienden"
+}

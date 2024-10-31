@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RegisterStudent.Models;
 using RegisterStudent.Services;
 using MessageBrokers;
+using Microsoft.AspNetCore.Builder;
 
 public class Startup
 {
@@ -26,23 +27,48 @@ public class Startup
         var connectionString = Configuration.GetConnectionString("DbConnection");
         services.AddDbContextPool<AppDbContext>(db => db.UseSqlServer(connectionString));
 
+        var sagaQueueName = Configuration.GetValue<string>("SagaQueueName");
+
+        BrokerTypes brokerType = (BrokerTypes)Enum.Parse(typeof(BrokerTypes),
+        Configuration.GetValue<string>("BrokerType"));
+
         services.AddMassTransit(x =>
         {
             x.SetKebabCaseEndpointNameFormatter();
             x.AddConsumer<RegisterStudentConsumer>();
             x.AddConsumer<CancelSendingEmailConsumer>();
 
-            x.UsingAzureServiceBus((_, cfg) =>
+            switch (brokerType)
             {
-                cfg.Host(Configuration.GetConnectionString("AzureServiceBus"));
-                cfg.ReceiveEndpoint(ASBQueues.SagaBusQueue, ep =>
-                {
-                    ep.PrefetchCount = 10;
-                    // Get Consumer
-                    ep.ConfigureConsumer<RegisterStudentConsumer>(_);
-                    ep.ConfigureConsumer<CancelSendingEmailConsumer>(_);
-                });
-            });
+                case BrokerTypes.ASB: 
+                    x.UsingAzureServiceBus((_, cfg) =>
+                    {
+                        cfg.Host(Configuration.GetConnectionString("AzureServiceBus"));
+                        cfg.ReceiveEndpoint(sagaQueueName, ep =>
+                        {
+                            ep.PrefetchCount = 10;
+                            // Get Consumer
+                            ep.ConfigureConsumer<RegisterStudentConsumer>(_);
+                            ep.ConfigureConsumer<CancelSendingEmailConsumer>(_);
+                        });
+                    }); 
+                    break;
+                case BrokerTypes.RabbitMQ:
+                    x.UsingRabbitMq((context, cfg) =>
+                    {
+                        cfg.Host(Configuration.GetConnectionString("RabbitMQ"));
+                        cfg.ReceiveEndpoint(sagaQueueName, ep =>
+                        {
+                            ep.PrefetchCount = 10;
+                            // Get Consumer
+                            ep.ConfigureConsumer<RegisterStudentConsumer>(context);
+                            ep.ConfigureConsumer<CancelSendingEmailConsumer>(context);
+                        });
+                    });
+                    break;
+                default:
+                    break;
+            }
         });
     }
 
@@ -52,8 +78,8 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
-            // app.UseOpenApi();
-            // app.UseSwaggerUi();
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();

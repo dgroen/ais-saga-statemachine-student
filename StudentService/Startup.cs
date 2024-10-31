@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using StudentService.Models;
 using StudentService.Services;
 using MessageBrokers;
+using Microsoft.OpenApi.Models;
 
 public class Startup
 {
@@ -24,7 +25,11 @@ public class Startup
         services.AddAutoMapper(typeof(Startup));
 
         var connectionString = Configuration.GetConnectionString("DbConnection");
+        var sagaQueueName = Configuration.GetValue<string>("SagaQueueName");
         services.AddDbContextPool<AppDbContext>(db => db.UseSqlServer(connectionString));
+
+        BrokerTypes brokerType = (BrokerTypes)Enum.Parse(typeof(BrokerTypes),
+        Configuration.GetValue<string>("BrokerType"));
 
         services.AddMassTransit(x =>
         {
@@ -32,17 +37,42 @@ public class Startup
             x.AddConsumer<GetValueConsumer>();
             x.AddConsumer<RegisterStudentCancelConsumer>();
 
-            x.UsingAzureServiceBus((_, cfg) =>
+            switch (brokerType)
             {
-                cfg.Host(Configuration.GetConnectionString("AzureServiceBus"));
-                cfg.ReceiveEndpoint(ASBQueues.SagaBusQueue, ep =>
-                {
-                    ep.PrefetchCount = 10;
-                    // Get Consumer
-                    ep.ConfigureConsumer<GetValueConsumer>(_);
-                    ep.ConfigureConsumer<RegisterStudentCancelConsumer>(_);
-                });
-            });
+                case BrokerTypes.ASB:
+                    x.UsingAzureServiceBus((_, cfg) =>
+                    {
+                        cfg.Host(Configuration.GetConnectionString("AzureServiceBus"));
+                        cfg.ReceiveEndpoint(sagaQueueName, ep =>
+                        {
+                            ep.PrefetchCount = 10;
+                            // Get Consumer
+                            ep.ConfigureConsumer<GetValueConsumer>(_);
+                            ep.ConfigureConsumer<RegisterStudentCancelConsumer>(_);
+                        });
+                    });
+                    break;
+                case BrokerTypes.RabbitMQ:
+                    x.UsingRabbitMq((_, cfg) =>
+                    {
+                        cfg.Host(Configuration.GetConnectionString("RabbitMQ"));
+                        cfg.ReceiveEndpoint(sagaQueueName, ep =>
+                        {
+                            ep.PrefetchCount = 10;
+                            // Get Consumer
+                            ep.ConfigureConsumer<GetValueConsumer>(_);
+                            ep.ConfigureConsumer<RegisterStudentCancelConsumer>(_);
+                        });
+                    });
+                    break;
+                default:
+                    break;
+            }
+        });
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
         });
     }
 
@@ -52,8 +82,8 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
-            // app.UseOpenApi();
-            // app.UseSwaggerUi();
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();

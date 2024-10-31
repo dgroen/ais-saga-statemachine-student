@@ -1,0 +1,10 @@
+{
+  "defaultHeaders": {
+    "Accept": "*/*"
+  },
+  "request": {
+    "https": {
+      "rejectUnauthorized": false
+    }
+  }
+}

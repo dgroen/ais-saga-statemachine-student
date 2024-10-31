@@ -371,3 +371,4 @@ RegisterStudent/appsettings.json
 .vscode/settings.json
 SagaService/appsettings.json
 MessageBrokers/appsettings.json
+Shared

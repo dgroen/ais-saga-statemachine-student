@@ -16,6 +16,12 @@ namespace StudentService.Controllers
         private readonly IMapper _mapper;
         private readonly IBus _bus;
 
+        /// <summary>
+        /// Constructor for StudentController.
+        /// </summary>
+        /// <param name="studentServices">IStudentServices object</param>
+        /// <param name="mapper">IMapper object</param>
+        /// <param name="bus">IBus object</param>
         public StudentController(IStudentServices studentServices, IMapper mapper, IBus bus)
         {
             _studentServices = studentServices;
@@ -23,6 +29,11 @@ namespace StudentService.Controllers
             _bus = bus;
         }
 
+        /// <summary>
+        /// Adds a new student to the database.
+        /// </summary>
+        /// <param name="addStudentDTO">AddStudentDTO object</param>
+        /// <returns>201 Created if added successfully, 400 Bad Request if not</returns>
         [HttpPost]
         public async Task<IActionResult> Post(AddStudentDTO addStudentDTO)
         {

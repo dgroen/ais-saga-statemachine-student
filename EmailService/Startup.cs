@@ -2,6 +2,7 @@ using MassTransit;
 using EmailService.Consumers;
 using Microsoft.EntityFrameworkCore;
 using MessageBrokers;
+using Microsoft.AspNetCore.Builder;
 
 public class Startup
 {
@@ -17,20 +18,46 @@ public class Startup
     {
         services.AddControllers();
 
+        var sagaQueueName = Configuration.GetValue<string>("SagaQueueName");
+
+        BrokerTypes brokerType = (BrokerTypes)Enum.Parse(typeof(BrokerTypes),
+        Configuration.GetValue<string>("BrokerType"));
+
         services.AddMassTransit(x =>
         {
             x.SetKebabCaseEndpointNameFormatter();
             x.AddConsumer<SendEmailConsumer>();
-            x.UsingAzureServiceBus((_, cfg) =>
+
+            switch (brokerType)
             {
-                cfg.Host(Configuration.GetConnectionString("AzureServiceBus"));
-                cfg.ReceiveEndpoint(ASBQueues.SagaBusQueue, ep =>
+                case BrokerTypes.ASB:
+                    x.UsingAzureServiceBus((_, cfg) =>
                 {
-                    ep.PrefetchCount = 10;
-                    // Get Consumer
-                    ep.ConfigureConsumer<SendEmailConsumer>(_);
+                    cfg.Host(Configuration.GetConnectionString("AzureServiceBus"));
+                    cfg.ReceiveEndpoint(sagaQueueName, ep =>
+                    {
+                        ep.PrefetchCount = 10;
+                        // Get Consumer
+                        ep.ConfigureConsumer<SendEmailConsumer>(_);
+                    });
                 });
-            });
+                    break;
+                case BrokerTypes.RabbitMQ:
+                    x.UsingRabbitMq((_, cfg) =>
+                    {
+                        cfg.Host(Configuration.GetConnectionString("RabbitMQ"));
+                        cfg.ReceiveEndpoint(sagaQueueName, ep =>
+                        {
+                            ep.PrefetchCount = 10;
+                            // Get Consumer
+                            ep.ConfigureConsumer<SendEmailConsumer>(_);
+                        });
+                    });
+                    break;
+                default:
+                    break;
+            }
+
         });
     }
 
@@ -40,8 +67,8 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
-            // app.UseOpenApi();
-            // app.UseSwaggerUi();
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();

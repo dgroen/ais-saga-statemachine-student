@@ -75,14 +75,14 @@
     {
       "name": "Launch All",
       "configurations": [
-        "SagaService", "EmailService", "RegisterStudent", "StudentService"
+        "SagaService", "StudentService", "RegisterStudent", "EmailService"
       ],
       "stopAll": true
     },
     {
       "name": "Launch All (EF Update)",
       "configurations": [
-        "SagaService (EF Update)","EmailService (EF Update)", "RegisterStudent (EF Update)",  "StudentService (EF Update)"
+        "SagaService (EF Update)", "StudentService (EF Update)", "RegisterStudent (EF Update)","EmailService (EF Update)"
       ],
       "stopAll": true
     }
