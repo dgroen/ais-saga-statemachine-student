@@ -1,24 +1,22 @@
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+
+using Microsoft.EntityFrameworkCore;
 using EmailService.Consumers;
-using MassTransit;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddControllers();
-
-// Register MassTransit 
-builder.Services.AddMassTransit(cfg =>
+public class Program
 {
-    cfg.AddBus(provider => MessageBrokers.RabbitMQ.ConfigureBus(provider));
-    cfg.AddConsumer<SendEmailConsumer>();
-});
+    public static void Main(string[] args)
+    {
+        CreateHostBuilder(args).Build().Run();
+    }
 
-var app = builder.Build();
-
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+    public static IHostBuilder CreateHostBuilder(string[] args)
+    {
+        return Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
+    }
+}

@@ -11,7 +11,7 @@ using SagaService.Models;
 
 namespace SagaService.Migrations
 {
-    [DbContext(typeof(AppDbContext))]
+    [DbContext(typeof(SagaContext))]
     [Migration("20230802235531_State")]
     partial class State
     {

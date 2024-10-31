@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "EmailService",
+            "name": "EmailService (EF Update)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "buildEmailService",
@@ -11,7 +11,15 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "RegisterStudent",
+            "name": "EmailService",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/EmailService/bin/Debug/net8.0/EmailService.dll",
+            "cwd": "${workspaceFolder}/EmailService",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "RegisterStudent (EF Update)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "buildRegisterStudent",
@@ -20,7 +28,15 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "SagaService",
+            "name": "RegisterStudent",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/RegisterStudent/bin/Debug/net8.0/RegisterStudent.dll",
+            "cwd": "${workspaceFolder}/RegisterStudent",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "SagaService (EF Update)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "buildSagaService",
@@ -29,10 +45,26 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "StudentService",
+            "name": "SagaService",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${workspaceFolder}/SagaService/bin/Debug/net8.0/SagaService.dll",
+            "cwd": "${workspaceFolder}/SagaService",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "StudentService (EF Update)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "buildStudentService",
+            "program": "${workspaceFolder}/StudentService/bin/Debug/net8.0/StudentService.dll",
+            "cwd": "${workspaceFolder}/StudentService",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "StudentService",
+            "type": "coreclr",
+            "request": "launch",
             "program": "${workspaceFolder}/StudentService/bin/Debug/net8.0/StudentService.dll",
             "cwd": "${workspaceFolder}/StudentService",
             "console": "integratedTerminal"
@@ -43,7 +75,14 @@
     {
       "name": "Launch All",
       "configurations": [
-        "EmailService", "RegisterStudent", "SagaService", "StudentService"
+        "SagaService", "EmailService", "RegisterStudent", "StudentService"
+      ],
+      "stopAll": true
+    },
+    {
+      "name": "Launch All (EF Update)",
+      "configurations": [
+        "SagaService (EF Update)","EmailService (EF Update)", "RegisterStudent (EF Update)",  "StudentService (EF Update)"
       ],
       "stopAll": true
     }

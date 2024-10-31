@@ -14,13 +14,13 @@ namespace StudentService.Consumers
             _studentServices = studentServices;
             _logger = logger;
         }
-        public async Task Consume(ConsumeContext<ICancelRegisterStudentEvent> context)
+        public void Consume(ConsumeContext<ICancelRegisterStudentEvent> context)
         {
             var data = context.Message;
-            if(data is not null)
+            if (data is not null)
             {
                 var res = _studentServices.DeleteStudent(data.StudentId.ToString());
-                if(res is true)
+                if (res is true)
                 {
                     _logger.LogInformation("The Student has been removed successufully");
                 }
@@ -29,6 +29,11 @@ namespace StudentService.Consumers
                     _logger.LogInformation("Failed!!!");
                 }
             }
+        }
+
+        Task IConsumer<ICancelRegisterStudentEvent>.Consume(ConsumeContext<ICancelRegisterStudentEvent> context)
+        {
+            throw new NotImplementedException();
         }
     }
 }

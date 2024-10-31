@@ -3,10 +3,10 @@ using SagaStateMachine;
 
 namespace SagaService.Models
 {
-    public class AppDbContext : DbContext
+    public class SagaContext : DbContext
     {
        
-        public AppDbContext(DbContextOptions<AppDbContext> options): base(options)
+        public SagaContext(DbContextOptions<SagaContext> options): base(options)
         {
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
