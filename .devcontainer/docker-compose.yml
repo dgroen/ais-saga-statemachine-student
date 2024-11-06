@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+ 
+  studentservice:
+    image: studentservice
+    container_name: ais-studentservice
+    ports:
+      - "5000:8080"
+      - "5001:8080"
+    depends_on:
+      - ais-db
+      - sagaservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+
+  sagaservice:
+    image: sagaservice
+    container_name: ais-sagaservice
+    ports:
+      - "8000:8080"
+      - "8001:8080"
+    depends_on:
+      - ais-db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development      
+
+  registerstudent:
+    image: registerstudent
+    container_name: ais-registerstudent
+    ports:
+      - "6000:8080"
+      - "6001:8080"
+    depends_on:
+      - ais-db
+      - sagaservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development  
+
+  emailservice:
+    image: emailservice
+    container_name: ais-emailservice
+    ports:
+      - "7000:8080"
+      - "7001:8080"
+    depends_on:
+      - ais-db
+      - sagaservice
+      
+  ais-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: ais-sqlserver
+    restart: unless-stopped
+    environment:
+      MSSQL_SA_PASSWORD: MyPassword1sStrong 
+      ACCEPT_EULA: Y
+    ports:
+      - "1433:1433"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: ais-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
