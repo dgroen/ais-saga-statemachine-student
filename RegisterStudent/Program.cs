@@ -25,6 +25,7 @@ public class Program
                 config
                     .AddJsonFile(Path.Combine($"{sharedFolder}", "SharedSettings.json"), optional: true)
                     .AddJsonFile("appsettings.json", optional: true)
+                    .AddJsonFile("SharedSettings.json", optional: true)
                     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
                 config.AddEnvironmentVariables();

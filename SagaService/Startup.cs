@@ -3,6 +3,7 @@ using SagaStateMachine;
 using Microsoft.EntityFrameworkCore;
 using SagaService.Models;
 using MessageBrokers;
+using System.Net.Mime;
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -18,6 +19,7 @@ public class Startup
         services.AddControllers();
 
         var connectionString = Configuration.GetConnectionString("DbConnection");
+        var sagaQueueName = Configuration.GetValue<string>("SagaQueueName");
         BrokerTypes brokerType = (BrokerTypes)Enum.Parse(typeof(BrokerTypes),
             Configuration.GetValue<string>("BrokerType"));
 
@@ -30,15 +32,32 @@ public class Startup
             switch (brokerType)
             {
                 case BrokerTypes.ASB:
-                    x.AddBus(provider => MessageBrokers.ASB.ConfigureBus(provider));
+                    x.UsingAzureServiceBus((_, cfg) =>
+                    {
+                        cfg.Host(Configuration.GetConnectionString("AzureServiceBus"));
+                        cfg.ReceiveEndpoint(sagaQueueName, ep =>
+                        {
+                            ep.PrefetchCount = 10;
+                        });
+                        cfg.DefaultContentType = new ContentType("application/json");
+                        cfg.UseRawJsonDeserializer();
+                        cfg.ConfigureEndpoints(_.GetRequiredService<IBusRegistrationContext>());
+                    });
                     break;
                 case BrokerTypes.RabbitMQ:
-                    x.AddBus(provider => MessageBrokers.RabbitMQ.ConfigureBus(provider));
+                    x.UsingRabbitMq((_, cfg) =>
+                    {
+                        cfg.Host(Configuration.GetConnectionString("RabbitMQ")); 
+                        cfg.ReceiveEndpoint(sagaQueueName, ep =>
+                        {
+                            ep.PrefetchCount = 10;
+                        });
+                        cfg.ConfigureEndpoints(_.GetRequiredService<IBusRegistrationContext>());
+                    });
                     break;
                 default:
-                    x.AddBus(provider => MessageBrokers.RabbitMQ.ConfigureBus(provider));
-                    break;
-            }            
+                    throw new NotImplementedException();
+            }
             x.AddSagaStateMachine<StudentStateMachine, StudentStateData>()
                 .EntityFrameworkRepository(r =>
                 {

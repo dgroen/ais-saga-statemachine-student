@@ -1,0 +1,2 @@
+CREATE DATABASE student_service
+GO

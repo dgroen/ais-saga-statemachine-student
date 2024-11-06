@@ -8,6 +8,6 @@ namespace MessageBrokers
         // Assigning the role Azure Service Bus Data Owner will provide sufficient permissions for 
         // Mass Transit to function on the namespace.
         // For more information: https://masstransit.io/documentation/configuration/transports/azure-service-bus#using-azure-managed-identity
-        public const string ASBURL = "sb://vsaisdev.servicebus.windows.net";
+        public const string ASBURL = "sb://<namespace>.servicebus.windows.net";
     }
 }
