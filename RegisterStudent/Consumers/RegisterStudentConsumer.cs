@@ -29,7 +29,7 @@ namespace RegisterStudent.Consumers
             if (data is not null)
             {
                 // Check if Age is 80 or less
-                if (data.Age < 80)
+                if (data.Age < 80 && isValidEmail(data.Email))
                 {
                     // Store message
                     // Use Mapper or use a studentinfo object directly
@@ -67,6 +67,18 @@ namespace RegisterStudent.Consumers
                     });
                     _logger.LogInformation($"Message canceled== StudentId is {data.StudentId}");
                 }
+            }
+        }
+        private Boolean isValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

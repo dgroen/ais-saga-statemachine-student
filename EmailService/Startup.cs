@@ -2,7 +2,6 @@ using MassTransit;
 using EmailService.Consumers;
 using Microsoft.EntityFrameworkCore;
 using MessageBrokers;
-using Microsoft.AspNetCore.Builder;
 
 public class Startup
 {
@@ -67,8 +66,6 @@ public class Startup
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
-            app.UseSwagger();
-            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();

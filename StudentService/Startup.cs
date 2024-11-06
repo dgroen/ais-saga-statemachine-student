@@ -5,9 +5,15 @@ using StudentService.Models;
 using StudentService.Services;
 using MessageBrokers;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 public class Startup
 {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Startup"/> class.
+        /// </summary>
+        /// <param name="configuration">The application configuration, which is used
+        /// to configure the application services.</param>
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
@@ -15,7 +21,11 @@ public class Startup
 
     public IConfiguration Configuration { get; }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// Configures the application services.
+        /// </summary>
+        /// <param name="services">The collection of services to add to the ASP.NET Core dependency injection container.</param>
+        ///
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
@@ -72,18 +82,32 @@ public class Startup
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Student Service API", Version = "v1" });
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            c.IncludeXmlComments(xmlPath);
         });
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    /// <summary>
+    /// Configures the HTTP request pipeline for the application.
+    /// </summary>
+    /// <param name="app">Provides the mechanisms to configure an application's request pipeline.</param>
+    /// <param name="env">Provides information about the web hosting environment an application is running in.</param>
+    /// <remarks>
+    /// In development environment, it enables the developer exception page and Swagger UI.
+    /// It also sets up HTTPS redirection, routing, authorization, and maps the controller endpoints.
+    /// </remarks>
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         if (env.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
-            app.UseSwaggerUI();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Student Service API v1");
+            });
         }
 
         app.UseHttpsRedirection();

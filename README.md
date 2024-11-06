@@ -23,13 +23,72 @@ As shown in the above image, a client will send a request to StudentService to r
 
 ## Launching the project
 
-### Database
+### SharedSettings.json (Shared folder)
+
+Place a file called SharedSettings.json in the Shared folder in the root of the project. This file contains the connection strings and other settings that are shared between the services.
+
+``` json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "BrokerType": "ASB",
+  "SagaQueueName": "saga-queue",
+  "ConnectionStrings": {
+    "DbConnection": "Server=tcp:ais-db,1433;Initial Catalog=student_service;User ID=<SQL server user name>;Password=<SQL server password>;MultipleActiveResultSets=False;Encrypt=False;Connection Timeout=30;TrustServerCertificate=True;",
+    "AzureServiceBus": "Endpoint=sb://vsaisdev.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=<key>",
+    "RabbitMQ": "amqp://guest:guest@localhost:5672/"
+  }
+}
+
+```
+
+|Setting|Description|example|
+|---|---|---|
+|BrokerType|ASB for Azure Service Bus or RabbitMQ for RabbitMQ|ASB|
+|SagaQueueName|Name of the saga queue|saga-queue|
+|AllowedHosts|Allowed hosts|*|
+
+|ConnectionStrings|Description|
+|---|---|
+|DbConnection|Connection string to the student-service database|
+|AzureServiceBus|Azure Service Bus connection string|
+|RabbitMQ|RabbitMQ connection string|
+
 
 ### VSCode
 
-A Launch configuration is provided in the launch.json file (.vscode) with the necessary configurations to start any or all services:
+A Launch configuration is provided in the launch.json file (.vscode) with the necessary configurations to start any or all services for debugging:
 - EmailService
 - RegisterStudent
 - SagaService
 - StudentService
-- Launch All (compound)
+- Launch All
+
+For each configuration is an equivalent with the extenstion "(EF Update)" that will update the database(s) prior to launching.
+
+
+### Docker
+
+To launch the services locally in docker containers, run the following command:for RabbitMQ
+
+``` bash
+bash start_containers.sh -s ALL -b RabbitMq
+```
+
+or for Azure Service Bus:
+
+``` bash
+bash start_containers.sh -s ALL -b ASB
+```
+
+### Testing
+
+In the Test folder run the tests in StudentTests.http.
+
+### 
+
