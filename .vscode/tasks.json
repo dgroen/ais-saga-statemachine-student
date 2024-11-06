@@ -73,8 +73,7 @@
       "command": "dotnet",
       "args": [
         "build",
-        "${workspaceFolder}/StudentService/StudentService.csproj",
-        "/p:DocumentationFile=${workspaceFolder}/StudentService/StudentService.xml"
+        "${workspaceFolder}/StudentService/StudentService.csproj"
       ],
       "problemMatcher": "$msCompile"
     },        
