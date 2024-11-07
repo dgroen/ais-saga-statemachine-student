@@ -1,0 +1,39 @@
+# valid student registration
+POST http://98.64.19.171:5000/api/student
+Content-Type: application/json
+    {
+  "title": "UC0001-Valid-Student-Registration",
+  "email": "test.student.001@virtualsciences.nl",
+  "age": 45,
+  "location": "Lienden"
+}
+
+# invalid;  not a valid email validation
+POST http://98.64.19.171:5000/api/student
+Content-Type: application/json
+    {
+  "title": "UC0002-Invalid-Student-Registration-Email-Validation",
+  "email": "pietlondon.virtualsciences.nl",
+  "age": 81,
+  "location": "Lienden"
+}
+
+# invalid; age exceeds validation
+POST http://98.64.19.171:5000/api/student
+Content-Type: application/json
+    {
+  "title": "UC0003-Invalid-Student-Registration-Age-Validation",
+  "email": "pietlondon@virtualsciences.nl",
+  "age": 81,
+  "location": "Lienden"
+}
+
+# invalid; we don't like people from London ;-)
+POST http://98.64.19.171:5000/api/student
+Content-Type: application/json
+    {
+  "title": "UC0004-Invalid-Student-Registration-City-Validation",
+  "email": "pietlondon@virtualsciences.nl",
+  "age": 41,
+  "location": "London"
+}
