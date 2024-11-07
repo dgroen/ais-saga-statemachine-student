@@ -96,17 +96,17 @@ build_container(){
 # Returns:
 #   None
 main(){
-    case $service_name in
-        "StudentService")
+    case "${service_name,,}" in
+        "studentservice")
             build_container "StudentService"
             ;;
-        "RegisterStudent")
+        "registerstudent")
             build_container "RegisterStudent"
             ;;
-        "SagaService")
+        "sagaservice")
             build_container "SagaService"
             ;;
-        "EmailService")
+        "emailservice")
             build_container "EmailService"
             ;;            
         *)

@@ -35,5 +35,8 @@
     <ProjectReference Include="..\Events\Events.csproj" />
     <ProjectReference Include="..\MessageBrokers\MessageBrokers.csproj" />
   </ItemGroup>
+<ItemGroup>
+  <ContainerEnvironmentVariable Include="ASPNETCORE_HTTP_PORTS" Value="7000" />
+</ItemGroup>
 
 </Project>
