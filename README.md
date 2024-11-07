@@ -92,3 +92,14 @@ In the Test folder run the tests in StudentTests.http.
 
 ### 
 
+# Deployment to Azure
+
+## Prerequisites
+
+## Deploying to Azure Container Instances
+
+In the Scripts folder run the following command:
+
+``` bash
+./deploy_container_intances.sh -r aisapis -g rg-ais-apis-student
+```

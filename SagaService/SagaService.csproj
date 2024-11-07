@@ -35,5 +35,8 @@
   <ItemGroup>
     <ProjectReference Include="..\MessageBrokers\MessageBrokers.csproj" />
     <ProjectReference Include="..\SagaStateMachine\SagaStateMachine.csproj" />
-  </ItemGroup>
+ </ItemGroup>
+<ItemGroup>
+  <ContainerEnvironmentVariable Include="ASPNETCORE_HTTP_PORTS" Value="8000" />
+</ItemGroup>
 </Project>
