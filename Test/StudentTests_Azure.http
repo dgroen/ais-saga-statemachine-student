@@ -1,15 +1,16 @@
+@STUDENT_SERVICE_URL=4.175.43.224:5000
 # valid student registration
-POST http://98.64.19.171:5000/api/student
+POST http://{{STUDENT_SERVICE_URL}}/api/student
 Content-Type: application/json
     {
   "title": "UC0001-Valid-Student-Registration",
-  "email": "test.student.001@virtualsciences.nl",
+  "email": "test@virtualsciences.nl",
   "age": 45,
   "location": "Lienden"
 }
 
 # invalid;  not a valid email validation
-POST http://98.64.19.171:5000/api/student
+POST http://{{STUDENT_SERVICE_URL}}/api/student
 Content-Type: application/json
     {
   "title": "UC0002-Invalid-Student-Registration-Email-Validation",
@@ -19,7 +20,7 @@ Content-Type: application/json
 }
 
 # invalid; age exceeds validation
-POST http://98.64.19.171:5000/api/student
+POST http://{{STUDENT_SERVICE_URL}}/api/student
 Content-Type: application/json
     {
   "title": "UC0003-Invalid-Student-Registration-Age-Validation",
@@ -29,7 +30,7 @@ Content-Type: application/json
 }
 
 # invalid; we don't like people from London ;-)
-POST http://98.64.19.171:5000/api/student
+POST http://{{STUDENT_SERVICE_URL}}/api/student
 Content-Type: application/json
     {
   "title": "UC0004-Invalid-Student-Registration-City-Validation",

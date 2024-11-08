@@ -60,6 +60,13 @@ public class Startup
                             ep.ConfigureConsumer<GetValueConsumer>(_);
                             ep.ConfigureConsumer<RegisterStudentCancelConsumer>(_);
                         });
+                        cfg.ReceiveEndpoint("saga-queue_skipped", ep =>
+                        {
+                            ep.PrefetchCount = 10;
+                            // Get Consumer
+                            ep.ConfigureConsumer<GetValueConsumer>(_);
+                            ep.ConfigureConsumer<RegisterStudentCancelConsumer>(_);
+                        });  
                     });
                     break;
                 case BrokerTypes.RabbitMQ:
@@ -73,6 +80,14 @@ public class Startup
                             ep.ConfigureConsumer<GetValueConsumer>(_);
                             ep.ConfigureConsumer<RegisterStudentCancelConsumer>(_);
                         });
+                        cfg.ReceiveEndpoint("saga-queue_skipped", ep =>
+                        {
+                            ep.PrefetchCount = 10;
+                            // Get Consumer
+                            ep.ConfigureConsumer<GetValueConsumer>(_);
+                            ep.ConfigureConsumer<RegisterStudentCancelConsumer>(_);
+                            ep.DiscardSkippedMessages();
+                        });                        
                     });
                     break;
                 default:

@@ -1,5 +1,5 @@
 # valid student registration
-POST http://localhost:5000/api/student
+POST https://localhost:5001/api/student
 Content-Type: application/json
     {
   "title": "UC0001-Valid-Student-Registration",

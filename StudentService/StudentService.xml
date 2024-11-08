@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>StudentService</name>
+    </assembly>
+    <members>
+        <member name="M:StudentService.Controllers.StudentController.#ctor(StudentService.Services.IStudentServices,AutoMapper.IMapper,MassTransit.IBus)">
+            <summary>
+            Constructor for StudentController.
+            </summary>
+            <param name="studentServices">IStudentServices object</param>
+            <param name="mapper">IMapper object</param>
+            <param name="bus">IBus object</param>
+        </member>
+        <member name="M:StudentService.Controllers.StudentController.Post(StudentService.DTO.AddStudentDTO)">
+            <summary>
+            Adds a new student to the database.
+            </summary>
+            <param name="addStudentDTO">AddStudentDTO object</param>
+            <returns>201 Created if added successfully, 400 Bad Request if not</returns>
+        </member>
+        <member name="T:StudentService.DTO.AddStudentDTO">
+            <summary>
+            Add a new student
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.AddStudentDTO.StudentId">
+            <summary>
+            The unique identifier for the student
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.AddStudentDTO.Title">
+            <summary>
+            The student title
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.AddStudentDTO.Email">
+            <summary>
+            The student email
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.AddStudentDTO.RequireDate">
+            <summary>
+            The date the student was required
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.AddStudentDTO.Age">
+            <summary>
+            The student age
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.AddStudentDTO.Location">
+            <summary>
+            The student location
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.AddStudentDTO.CreatedDate">
+            <summary>
+            The date the student was created
+            </summary>
+        </member>
+        <member name="T:StudentService.DTO.ResponseStudentDTO">
+            <summary>
+            Response object for the added student
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.ResponseStudentDTO.StudentId">
+            <summary>
+            Unique identifier for the student
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.ResponseStudentDTO.Title">
+            <summary>
+            The title of the student
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.ResponseStudentDTO.Email">
+            <summary>
+            The email of the student
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.ResponseStudentDTO.RequireDate">
+            <summary>
+            The date that the student is required
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.ResponseStudentDTO.Age">
+            <summary>
+            The age of the student
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.ResponseStudentDTO.Location">
+            <summary>
+            The location of the student
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.ResponseStudentDTO.StudentNumber">
+            <summary>
+            The student number of the student
+            </summary>
+        </member>
+        <member name="P:StudentService.DTO.ResponseStudentDTO.CreatedDate">
+            <summary>
+            The date that the student was created
+            </summary>
+        </member>
+        <member name="T:StudentService.Migrations.Student">
+            <inheritdoc />
+        </member>
+        <member name="M:StudentService.Migrations.Student.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:StudentService.Migrations.Student.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:StudentService.Migrations.Student.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:StudentService.Models.Student">
+            <summary>
+            Student model
+            </summary>
+        </member>
+        <member name="P:StudentService.Models.Student.StudentId">
+            <summary>
+            Student identifier
+            </summary>
+        </member>
+        <member name="P:StudentService.Models.Student.Title">
+            <summary>
+            Student title
+            </summary>
+        </member>
+        <member name="P:StudentService.Models.Student.Email">
+            <summary>
+            Student email
+            </summary>
+        </member>
+        <member name="P:StudentService.Models.Student.RequireDate">
+            <summary>
+            Student required date
+            </summary>
+        </member>
+        <member name="P:StudentService.Models.Student.Age">
+            <summary>
+            Student age
+            </summary>
+        </member>
+        <member name="P:StudentService.Models.Student.Location">
+            <summary>
+            Student location
+            </summary>
+        </member>
+        <member name="P:StudentService.Models.Student.StudentNumber">
+            <summary>
+            Student number
+            </summary>
+        </member>
+        <member name="P:StudentService.Models.Student.CreatedDate">
+            <summary>
+            Student created date
+            </summary>
+        </member>
+        <member name="M:Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Startup"/> class.
+            </summary>
+            <param name="configuration">The application configuration, which is used
+            to configure the application services.</param>
+        </member>
+        <member name="M:Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+             <summary>
+             Configures the application services.
+             </summary>
+             <param name="services">The collection of services to add to the ASP.NET Core dependency injection container.</param>
+            
+        </member>
+        <member name="M:Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            Configures the HTTP request pipeline for the application.
+            </summary>
+            <param name="app">Provides the mechanisms to configure an application's request pipeline.</param>
+            <param name="env">Provides information about the web hosting environment an application is running in.</param>
+            <remarks>
+            In development environment, it enables the developer exception page and Swagger UI.
+            It also sets up HTTPS redirection, routing, authorization, and maps the controller endpoints.
+            </remarks>
+        </member>
+    </members>
+</doc>

@@ -63,6 +63,14 @@ public class Startup
                             ep.ConfigureConsumer<RegisterStudentConsumer>(context);
                             ep.ConfigureConsumer<CancelSendingEmailConsumer>(context);
                         });
+                        cfg.ReceiveEndpoint("$(sagaQueueName)_skipped", ep =>
+                        {
+                            ep.PrefetchCount = 10;
+                            // Get Consumer
+                            ep.ConfigureConsumer<RegisterStudentConsumer>(context);
+                            ep.ConfigureConsumer<CancelSendingEmailConsumer>(context);
+                            ep.DiscardSkippedMessages();
+                        });                          
                     });
                     break;
                 default:

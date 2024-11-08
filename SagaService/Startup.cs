@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SagaService.Models;
 using MessageBrokers;
 using System.Net.Mime;
+using MassTransit.Middleware;
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -50,7 +51,12 @@ public class Startup
                         cfg.Host(Configuration.GetConnectionString("RabbitMQ")); 
                         cfg.ReceiveEndpoint(sagaQueueName, ep =>
                         {
-                            ep.PrefetchCount = 10;
+                            ep.PrefetchCount = 1;
+                            ep.ConfigureDeadLetter(x =>
+                            {
+                                x.UseFilter(new DeadLetterTransportFilter());
+                            });
+
                         });
                         cfg.ConfigureEndpoints(_.GetRequiredService<IBusRegistrationContext>());
                     });
