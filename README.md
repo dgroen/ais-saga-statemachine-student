@@ -96,10 +96,31 @@ In the Test folder run the tests in StudentTests.http.
 
 ## Prerequisites
 
+- Azure account
+- Azure CLI installed
+- Docker installed
+- Subscription with container registry access
+- Basic understanding of containerization
+
 ## Deploying to Azure Container Instances
+```	mermaid
+sequenceDiagram
+    participant Dev as Developer
+    participant Script as Deploy Script
+    participant ACR as Azure Container Registry
+    participant ACI as Azure Container Instances
+    
+    Dev->>Script: Run deployment script
+    Script->>ACR: Login to registry
+    Script->>Script: Build containers
+    Script->>ACR: Push containers
+    Script->>ACI: Deploy container groups
+```
 
 In the Scripts folder run the following command:
 
 ``` bash
 ./deploy_container_intances.sh -r aisapis -g rg-ais-apis-student
 ```
+
+

@@ -23,8 +23,8 @@ on_error() {
 usage() {
     echo "Usage: $0 -s <service_container>"
     echo "  -s: The name of the service container to start"
-    echo "      Supported values: StudentService, RegisterStudent, SagaService, EmailService, ALL"
-    echo "      The 'ALL' option will start all containers"
+    echo "      Supported values: StudentService, RegisterStudent, SagaService, EmailService, All"
+    echo "      The 'All' option will start all containers"
     echo "      If no container is specified, the script will start all containers"
     echo "  -b  BrokerType: The type of message broker to use"
     echo "      Supported values: ASB, RabbitMQ"
@@ -125,7 +125,7 @@ main(){
         "EmailService")
             start_container "EmailService"
             ;;
-        "ALL")
+        "All")
             start_ef_container "SagaService"
             start_ef_container StudentService
             start_ef_container "RegisterStudent"
