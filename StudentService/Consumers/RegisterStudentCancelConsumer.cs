@@ -22,7 +22,7 @@ namespace StudentService.Consumers
                 var res = _studentServices.DeleteStudent(data.StudentId.ToString());
                 if (res is true)
                 {
-                    _logger.LogInformation("The Student has been removed successufully");
+                    _logger.LogInformation("The Student has been removed successfully");
                 }
                 else
                 {

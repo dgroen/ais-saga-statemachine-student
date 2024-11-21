@@ -9,11 +9,11 @@ using System.Reflection;
 
 public class Startup
 {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Startup"/> class.
-        /// </summary>
-        /// <param name="configuration">The application configuration, which is used
-        /// to configure the application services.</param>
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Startup"/> class.
+    /// </summary>
+    /// <param name="configuration">The application configuration, which is used
+    /// to configure the application services.</param>
     public Startup(IConfiguration configuration)
     {
         Configuration = configuration;
@@ -21,11 +21,11 @@ public class Startup
 
     public IConfiguration Configuration { get; }
 
-        /// <summary>
-        /// Configures the application services.
-        /// </summary>
-        /// <param name="services">The collection of services to add to the ASP.NET Core dependency injection container.</param>
-        ///
+    /// <summary>
+    /// Configures the application services.
+    /// </summary>
+    /// <param name="services">The collection of services to add to the ASP.NET Core dependency injection container.</param>
+    ///
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddControllers();
@@ -60,13 +60,6 @@ public class Startup
                             ep.ConfigureConsumer<GetValueConsumer>(_);
                             ep.ConfigureConsumer<RegisterStudentCancelConsumer>(_);
                         });
-                        cfg.ReceiveEndpoint("saga-queue_skipped", ep =>
-                        {
-                            ep.PrefetchCount = 10;
-                            // Get Consumer
-                            ep.ConfigureConsumer<GetValueConsumer>(_);
-                            ep.ConfigureConsumer<RegisterStudentCancelConsumer>(_);
-                        });  
                     });
                     break;
                 case BrokerTypes.RabbitMQ:
@@ -80,14 +73,7 @@ public class Startup
                             ep.ConfigureConsumer<GetValueConsumer>(_);
                             ep.ConfigureConsumer<RegisterStudentCancelConsumer>(_);
                         });
-                        cfg.ReceiveEndpoint("saga-queue_skipped", ep =>
-                        {
-                            ep.PrefetchCount = 10;
-                            // Get Consumer
-                            ep.ConfigureConsumer<GetValueConsumer>(_);
-                            ep.ConfigureConsumer<RegisterStudentCancelConsumer>(_);
-                            ep.DiscardSkippedMessages();
-                        });                        
+
                     });
                     break;
                 default:

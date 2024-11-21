@@ -116,11 +116,36 @@ sequenceDiagram
     Script->>ACR: Push containers
     Script->>ACI: Deploy container groups
 ```
+``` mermaid
+classDiagram
+    class Student {
+        +string StudentId
+        +string Title
+        +string Email
+        +DateTime RequireDate
+        +int Age
+        +string Location
+        +string StudentNumber
+        +DateTime CreatedDate
+    }
+    
+    class StudentServices {
+        +Task<Student> AddStudent(Student student)
+        +bool DeleteStudent(string StudentId)
+    }
+    
+    class StudentController {
+        +Post(AddStudentDTO addStudentDTO)
+    }
+    
+    StudentController --> StudentServices
+    StudentServices --> Student
+```
 
 In the Scripts folder run the following command:
 
 ``` bash
-./deploy_container_intances.sh -r aisapis -g rg-ais-apis-student
+./deploy_container_instances.sh -r aisapis -g rg-ais-apis-student
 ```
 
 
