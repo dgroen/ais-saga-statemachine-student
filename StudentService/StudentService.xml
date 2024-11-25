@@ -4,6 +4,44 @@
         <name>StudentService</name>
     </assembly>
     <members>
+        <member name="M:StudentService.Common.Mapping.StudentMapping.#ctor">
+            <summary>
+            Mapping profiles for Student and DTOs
+            </summary>
+        </member>
+        <member name="M:StudentService.Consumers.GetValueConsumer.#ctor(Microsoft.Extensions.Logging.ILogger{StudentService.Consumers.GetValueConsumer})">
+            <summary>
+            Initializes a new instance of the <see cref="T:StudentService.Consumers.GetValueConsumer"/> class.
+            </summary>
+            <param name="logger">An instance of <see cref="T:Microsoft.Extensions.Logging.ILogger`1"/> used for logging information.</param>
+        </member>
+        <member name="M:StudentService.Consumers.GetValueConsumer.Consume(MassTransit.ConsumeContext{Events.StudentEvents.IGETValueEvent})">
+            <summary>
+            Consumes the IGETValueEvent message and publishes IAddStudentEvent to the message broker.
+            </summary>
+            <param name="context">The consume context containing the IGETValueEvent message.</param>
+            <remarks>
+            Although the RegisterStudent service has a consumer that it will be listened on the IAddStudentEvent,
+            this method will publish the IAddStudentEvent to the message broker.
+            </remarks>
+        </member>
+        <member name="M:StudentService.Consumers.RegisterStudentCancelConsumer.#ctor(StudentService.Services.IStudentServices,Microsoft.Extensions.Logging.ILogger{StudentService.Consumers.RegisterStudentCancelConsumer})">
+            <summary>
+            Constructor for RegisterStudentCancelConsumer.
+            </summary>
+            <param name="studentServices">IStudentServices object</param>
+            <param name="logger">ILogger object</param>
+        </member>
+        <member name="M:StudentService.Consumers.RegisterStudentCancelConsumer.Consume(MassTransit.ConsumeContext{Events.StudentEvents.ICancelRegisterStudentEvent})">
+            <summary>
+            Consumes the ICancelRegisterStudentEvent to delete a student record.
+            </summary>
+            <param name="context">The consume context containing the ICancelRegisterStudentEvent message.</param>
+            <remarks>
+            This method attempts to delete the student with the provided StudentId from the database.
+            If successful, it logs the success message. Otherwise, it logs a failure message.
+            </remarks>
+        </member>
         <member name="M:StudentService.Controllers.StudentController.#ctor(StudentService.Services.IStudentServices,AutoMapper.IMapper,MassTransit.IBus)">
             <summary>
             Constructor for StudentController.

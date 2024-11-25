@@ -77,13 +77,13 @@ For each configuration is an equivalent with the extenstion "(EF Update)" that w
 To launch the services locally in docker containers, run the following command:for RabbitMQ
 
 ``` bash
-bash start_containers.sh -s ALL -b RabbitMq
+bash start_containers.sh -s All -b RabbitMq
 ```
 
 or for Azure Service Bus:
 
 ``` bash
-bash start_containers.sh -s ALL -b ASB
+bash start_containers.sh -s All -b ASB
 ```
 
 ### Testing
