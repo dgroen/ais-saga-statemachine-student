@@ -1,0 +1,29 @@
+@STUDENT_SERVICE_URL=localhost:5000
+
+# invalid;  not a valid email validation
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0002-Invalid-Student-Registration-Email-Validation",
+  "email": "test11.virtualsciences.nl",
+  "age": 11,
+  "location": "Locatie 11"
+}
+
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0002-Invalid-Student-Registration-Email-Validation",
+  "email": "test11@virtualsciences@nl",
+  "age": 11,
+  "location": "Locatie 11"
+}
+
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0002-Invalid-Student-Registration-Email-Validation",
+  "email": "test11.virtualsciences@nl",
+  "age": 11,
+  "location": "Locatie 11"
+}

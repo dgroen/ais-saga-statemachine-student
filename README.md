@@ -77,13 +77,13 @@ For each configuration is an equivalent with the extenstion "(EF Update)" that w
 To launch the services locally in docker containers, run the following command:for RabbitMQ
 
 ``` bash
-bash start_containers.sh -s ALL -b RabbitMq
+bash start_containers.sh -s All -b RabbitMq
 ```
 
 or for Azure Service Bus:
 
 ``` bash
-bash start_containers.sh -s ALL -b ASB
+bash start_containers.sh -s All -b ASB
 ```
 
 ### Testing
@@ -96,10 +96,56 @@ In the Test folder run the tests in StudentTests.http.
 
 ## Prerequisites
 
+- Azure account
+- Azure CLI installed
+- Docker installed
+- Subscription with container registry access
+- Basic understanding of containerization
+
 ## Deploying to Azure Container Instances
+```	mermaid
+sequenceDiagram
+    participant Dev as Developer
+    participant Script as Deploy Script
+    participant ACR as Azure Container Registry
+    participant ACI as Azure Container Instances
+    
+    Dev->>Script: Run deployment script
+    Script->>ACR: Login to registry
+    Script->>Script: Build containers
+    Script->>ACR: Push containers
+    Script->>ACI: Deploy container groups
+```
+``` mermaid
+classDiagram
+    class Student {
+        +string StudentId
+        +string Title
+        +string Email
+        +DateTime RequireDate
+        +int Age
+        +string Location
+        +string StudentNumber
+        +DateTime CreatedDate
+    }
+    
+    class StudentServices {
+        +Task<Student> AddStudent(Student student)
+        +bool DeleteStudent(string StudentId)
+    }
+    
+    class StudentController {
+        +Post(AddStudentDTO addStudentDTO)
+    }
+    
+    StudentController --> StudentServices
+    StudentServices --> Student
+```
 
 In the Scripts folder run the following command:
 
 ``` bash
-./deploy_container_intances.sh -r aisapis -g rg-ais-apis-student
+./deploy_container_instances.sh -r aisapis -g rg-ais-apis-student
 ```
+
+

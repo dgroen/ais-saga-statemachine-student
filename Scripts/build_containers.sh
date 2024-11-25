@@ -26,7 +26,7 @@ trap 'on_error $LINENO' ERR
 usage() {
     echo "Usage: $0 -s <service_name>"
     echo "  -s: The name of the service whose database should be updated"
-    echo "      Supported values: StudentService, RegisterStudent, SagaService"
+    echo "      Supported values: StudentService, RegisterStudent, SagaService, All"
     echo "  -h: Show this help message"
     exit 1;
 }
@@ -108,7 +108,13 @@ main(){
             ;;
         "emailservice")
             build_container "EmailService"
-            ;;            
+            ;;           
+        "all")
+            build_container "StudentService"
+            build_container "RegisterStudent"
+            build_container "SagaService"
+            build_container "EmailService"
+            ;; 
         *)
             echo "Invalid container name: $service_name"
             usage
