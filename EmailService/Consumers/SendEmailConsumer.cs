@@ -18,7 +18,8 @@ namespace EmailService.Consumers
             {
                 if (data.Location == "London")
                 {
-                    await context.Publish<ICancelSendEmailEvent>(new{
+                    await context.Publish<ICancelSendEmailEvent>(new
+                    {
                         StudentId = data.StudentId,
                         Title = data.Title,
                         Email = data.Email,
