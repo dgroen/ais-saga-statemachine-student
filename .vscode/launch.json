@@ -33,7 +33,8 @@
             "request": "launch",
             "program": "${workspaceFolder}/RegisterStudent/bin/Debug/net8.0/RegisterStudent.dll",
             "cwd": "${workspaceFolder}/RegisterStudent",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "requireExactSource": false
         },
         {
             "name": "SagaService (EF Update)",

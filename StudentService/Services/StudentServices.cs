@@ -12,7 +12,7 @@ namespace StudentService.Services
         }
         public async Task<Student> AddStudent(Student student)
         {
-            if(student is not null)
+            if (student is not null)
             {
                 await _dbContext.Student.AddAsync(student);
                 await _dbContext.SaveChangesAsync();
@@ -22,8 +22,8 @@ namespace StudentService.Services
 
         public bool DeleteStudent(string StudentId)
         {
-            var studentObj = _dbContext.Student.FirstOrDefault(t=>t.StudentId == StudentId);
-            if(studentObj is not null)
+            var studentObj = _dbContext.Student.FirstOrDefault(t => t.StudentId == StudentId);
+            if (studentObj is not null)
             {
                 _dbContext.Student.Remove(studentObj);
                 _dbContext.SaveChanges();

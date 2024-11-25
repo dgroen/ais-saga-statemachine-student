@@ -1,0 +1,91 @@
+@STUDENT_SERVICE_URL=localhost:5000
+# valid student registration
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0001-Valid-Student-Registration",
+  "email": "test1@virtualsciences.nl",
+  "age": 1,
+  "location": "Locatie 1"
+}
+
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0001-Valid-Student-Registration",
+  "email": "test2@virtualsciences.nl",
+  "age": 2,
+  "location": "Locatie 2"
+}
+
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0001-Valid-Student-Registration",
+  "email": "test3@virtualsciences.nl",
+  "age": 3,
+  "location": "Locatie 3"
+}
+
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0001-Valid-Student-Registration",
+  "email": "test4@virtualsciences.nl",
+  "age": 4,
+  "location": "Locatie 4"
+}
+
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0001-Valid-Student-Registration",
+  "email": "test5@virtualsciences.nl",
+  "age": 5,
+  "location": "Locatie 5"
+}
+
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0001-Valid-Student-Registration",
+  "email": "test6@virtualsciences.nl",
+  "age": 6,
+  "location": "Locatie 6"
+}
+
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0001-Valid-Student-Registration",
+  "email": "test7@virtualsciences.nl",
+  "age": 7,
+  "location": "Locatie 7"
+}
+
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0001-Valid-Student-Registration",
+  "email": "test8@virtualsciences.nl",
+  "age": 8,
+  "location": "Locatie 8"
+}
+
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0001-Valid-Student-Registration",
+  "email": "test9@virtualsciences.nl",
+  "age": 9,
+  "location": "Locatie 9"
+}
+
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0001-Valid-Student-Registration",
+  "email": "test10@virtualsciences.nl",
+  "age": 10,
+  "location": "Locatie 10"
+}

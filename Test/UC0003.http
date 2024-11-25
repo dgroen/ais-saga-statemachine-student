@@ -1,0 +1,31 @@
+@STUDENT_SERVICE_URL=localhost:5000
+
+
+# invalid; age exceeds validation
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0003-Invalid-Student-Registration-Age-Validation",
+  "email": "test12@virtualsciences.nl",
+  "age": 80,
+  "location": "Locatie 12"
+}
+
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0003-Invalid-Student-Registration-Age-Validation",
+  "email": "test13@virtualsciences.nl",
+  "age": 81,
+  "location": "Locatie 13"
+}
+
+# invalid; we don't like OLD people from London ;-)
+POST http://{{STUDENT_SERVICE_URL}}/api/student
+Content-Type: application/json
+    {
+  "title": "UC0004-Invalid-Student-Registration-City-Validation",
+  "email": "test14@virtualsciences.nl",
+  "age": 82,
+  "location": "London"
+}

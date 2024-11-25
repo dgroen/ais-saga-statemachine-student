@@ -19,7 +19,6 @@ public class Startup
         services.AddControllers();
 
         var connectionString = Configuration.GetConnectionString("DbConnection");
-        var sagaQueueName = Configuration.GetValue<string>("SagaQueueName");
         BrokerTypes brokerType = (BrokerTypes)Enum.Parse(typeof(BrokerTypes),
             Configuration.GetValue<string>("BrokerType"));
 
@@ -35,10 +34,6 @@ public class Startup
                     x.UsingAzureServiceBus((_, cfg) =>
                     {
                         cfg.Host(Configuration.GetConnectionString("AzureServiceBus"));
-                        cfg.ReceiveEndpoint(sagaQueueName, ep =>
-                        {
-                            ep.PrefetchCount = 10;
-                        });
                         cfg.DefaultContentType = new ContentType("application/json");
                         cfg.UseRawJsonDeserializer();
                         cfg.ConfigureEndpoints(_.GetRequiredService<IBusRegistrationContext>());
@@ -48,10 +43,6 @@ public class Startup
                     x.UsingRabbitMq((_, cfg) =>
                     {
                         cfg.Host(Configuration.GetConnectionString("RabbitMQ")); 
-                        cfg.ReceiveEndpoint(sagaQueueName, ep =>
-                        {
-                            ep.PrefetchCount = 10;
-                        });
                         cfg.ConfigureEndpoints(_.GetRequiredService<IBusRegistrationContext>());
                     });
                     break;
