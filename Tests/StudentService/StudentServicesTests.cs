@@ -35,7 +35,6 @@ public class StudentServicesTests
         // Arrange
         _dbContextMock.Setup(x => x.Student)
         .ReturnsDbSet(StudentTestDataHelper.GetFakeStudent(_newStudent));
-
         // Act
         var result = await _studentServices.AddStudent(_newStudent);
 
@@ -43,7 +42,6 @@ public class StudentServicesTests
         Assert.NotNull(result);
         Assert.IsType<Student>(result);
         Assert.Equal(_newStudent, result);
-
     }
 
 
