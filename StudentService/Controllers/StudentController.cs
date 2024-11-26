@@ -16,6 +16,10 @@ namespace StudentService.Controllers
         private readonly IMapper _mapper;
         private readonly IBus _bus;
 
+        public StudentController(IStudentServices @object)
+        {
+        }
+
         /// <summary>
         /// Constructor for StudentController.
         /// </summary>
@@ -61,5 +65,10 @@ namespace StudentService.Controllers
             }
             return BadRequest();
         }
+
+        // internal async Task AddStudent(AddStudentDTO studentDto)
+        // {
+        //     throw new NotImplementedException();
+        // }
     }
 }
