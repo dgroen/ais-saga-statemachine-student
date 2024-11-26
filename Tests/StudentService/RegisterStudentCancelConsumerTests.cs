@@ -6,7 +6,7 @@ using Moq;
 using StudentService.Consumers;
 using StudentService.Services;
 
-namespace Tests.StudentService
+namespace StudentService.Tests.Consumers
 {
     public class RegisterStudentCancelConsumerTests
     {
