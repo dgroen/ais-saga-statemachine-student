@@ -12,24 +12,55 @@ namespace StudentService.Services
         }
         public async Task<Student> AddStudent(Student student)
         {
-            if (student is not null)
+            if (student == null)
+            {
+                throw new ArgumentNullException(nameof(student), "Student cannot be null.");
+            }
+
+            try
             {
                 await _dbContext.Student.AddAsync(student);
                 await _dbContext.SaveChangesAsync();
+                return student;
             }
-            return student;
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException ex)
+            {
+                // Handle database update exceptions
+                // Log the exception or handle it as per your logging strategy
+                throw new ApplicationException("An error occurred while adding the student to the database.", ex);
+            }
+            catch (Exception ex)
+            {
+                // Handle any other exceptions
+                // Log the exception or handle it as per your logging strategy
+                throw new ApplicationException("An unexpected error occurred while adding the student.", ex);
+            }
         }
 
         public bool DeleteStudent(string StudentId)
         {
-            var studentObj = _dbContext.Student.FirstOrDefault(t => t.StudentId == StudentId);
-            if (studentObj is not null)
+            if (string.IsNullOrEmpty(StudentId))
             {
-                _dbContext.Student.Remove(studentObj);
-                _dbContext.SaveChanges();
-                return true;
+                throw new ArgumentException("StudentId cannot be null or empty.", nameof(StudentId));
             }
-            return false;
+
+            try
+            {
+                var studentObj = _dbContext.Student.FirstOrDefault(t => t.StudentId == StudentId);
+                if (studentObj is not null)
+                {
+                    _dbContext.Student.Remove(studentObj);
+                    _dbContext.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions, such as logging the error
+                // Log the exception or handle it as per your logging strategy
+                throw new ApplicationException("An error occurred while deleting the student.", ex);
+            }
         }
     }
 }
