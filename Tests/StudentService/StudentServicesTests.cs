@@ -10,19 +10,18 @@ using Tests.Helpers;
 namespace StudentService.Tests.Services;
 public class StudentServicesTests
 {
-    // private  Mock<AppDbContext> _studentRepositoryMock;
-    // private StudentServices _studentServices;
+    private  Mock<AppDbContext> _dbContextMock;
+    private StudentServices _studentServices;
 
-    // public StudentServicesTests()
-    // {
-    //     _studentRepositoryMock = new Moq.EntityFrameworkCore.Mock<AppDbContext>();
-    //     _studentServices = new StudentServices(_studentRepositoryMock.Object);
-    // }
+    public StudentServicesTests()
+    {
+        _dbContextMock = new Mock<AppDbContext>();
+        _studentServices = new StudentServices(_dbContextMock.Object);
+    }
 
     [Fact]
-    public void AddStudent_ShouldAddStudent_WhenStudentIsValid()
+    public async void AddStudent_ShouldAddStudent_WhenStudentIsValid()
     {
-
         // Arrange
         var fixture = new Fixture();
         var newStudent = fixture.Build<Student>()
@@ -32,17 +31,17 @@ public class StudentServicesTests
         .With(x => x.Email, "OgB4a@example.com")
         .Create(); 
 
-        var dbContextMock = new Mock<StudentService.Models.AppDbContext>();
-        dbContextMock.Setup(x => x.Student)
+        _dbContextMock.Setup(x => x.Student)
         .ReturnsDbSet(StudentTestDataHelper.GetFakeStudent(newStudent));
         
-        StudentServices studentServices = new StudentServices(dbContextMock.Object);
-
         // Act
-        var result = studentServices.AddStudent(newStudent);
+        var result = await _studentServices.AddStudent(newStudent);
 
         // Assert
         Assert.NotNull(result);
+        Assert.IsType<Student>(result);
+        Assert.Equal(newStudent, result);
+       
     }
 
 //     [Fact]
