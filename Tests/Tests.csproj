@@ -27,6 +27,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StudentService\StudentService.csproj" />
+    <ProjectReference Include="..\SagaStateMachine\SagaStateMachine.csproj" />
+    <ProjectReference Include="..\Events\Events.csproj" />
+    <ProjectReference Include="..\RegisterStudent\RegisterStudent.csproj" />
+    <ProjectReference Include="..\EmailService\EmailService.csproj" />
   </ItemGroup>
 
 </Project>
