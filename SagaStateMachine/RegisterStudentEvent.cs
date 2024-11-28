@@ -6,9 +6,13 @@ namespace SagaStateMachine
     public class RegisterStudentEvent : IRegisterStudentEvent
     {
         private readonly StudentStateData _studentStateData;
-
+        public StudentStateData StudentStateData => _studentStateData;
         public RegisterStudentEvent(StudentStateData studentStateData)
         {
+            if (studentStateData == null)
+            {
+                throw new ArgumentNullException(nameof(studentStateData));
+            }
             _studentStateData = studentStateData;
         }
         public Guid StudentId => _studentStateData.StudentId;

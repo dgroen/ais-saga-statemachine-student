@@ -27,7 +27,7 @@ As shown in the above image, a client will send a request to StudentService to r
 
 Place a file called SharedSettings.json in the Shared folder in the root of the project. This file contains the connection strings and other settings that are shared between the services.
 
-``` json
+```json
 {
   "Logging": {
     "LogLevel": {
@@ -149,7 +149,7 @@ In the Scripts folder run the following command:
 ```
 
 
-# StudentService
+# Student Service
 
 ## Sequence diagram for AddStudent method with error handling
 ```Mermaid
@@ -193,7 +193,7 @@ else StudentId is valid
 end
 ```
 
-## Class diagram for StudentServices with updated error handlin
+## Class diagram for StudentServices with updated error handling
 ```Mermaid
 classDiagram
 class StudentServices {
@@ -213,4 +213,51 @@ class AppDbContext {
     +Student: DbSet~Student~
 }
 StudentServices --> AppDbContext: uses
+```
+
+# RegisterStudent service
+
+## Sequence diagram for RegisterStudent method with error handling
+
+```Mermaid
+sequenceDiagram
+participant Client
+participant GetValueConsumer
+participant RegisterStudentConsumer
+participant StudentInfoService
+participant Database
+
+Client->>GetValueConsumer: Send GET Value Event
+GetValueConsumer->>RegisterStudentConsumer: Publish Add Student Event
+RegisterStudentConsumer->>StudentInfoService: Add Student
+alt Student is valid
+    StudentInfoService->>Database: Save Student
+    Database-->>StudentInfoService: Student Saved
+    StudentInfoService-->>RegisterStudentConsumer: Return Saved Student
+    RegisterStudentConsumer->>Client: Send Email Event
+else Student is invalid
+    RegisterStudentConsumer->>Client: Cancel Registration Event
+end
+```
+## Class diagram for RegisterStudent service
+
+```Mermaid
+classDiagram
+class StudentServices {
+    +AddStudent(student: Student): Task~Student~
+    +DeleteStudent(StudentId: string): bool
+}
+class StudentInfoService {
+    +AddStudentInfo(studentInfo: StudentInfo): Task~StudentInfo~
+    +RemoveStudentInfo(StudentId: string): bool
+}
+class RegisterStudentConsumer {
+    +Consume(context: ConsumeContext~IRegisterStudentEvent~)
+}
+class GetValueConsumer {
+    +Consume(context: ConsumeContext~IGETValueEvent~)
+}
+StudentServices <|-- StudentInfoService: implements
+RegisterStudentConsumer --> StudentInfoService: uses
+GetValueConsumer --> StudentServices: uses
 ```

@@ -1,21 +1,26 @@
 using AutoMapper;
-using StudentService.Common.Mapping;
 using StudentService.DTO;
 using StudentService.Models;
 using AutoFixture;
 
-namespace StudentService.Tests.Common.Mapping
+namespace StudentService.Common.Mapping.Tests
 {
     public class StudentMappingTests
     {
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Tests the mapping from <see cref="AddStudentDTO"/> to <see cref="Student"/>.
+        /// </summary>
         public StudentMappingTests()
         {
             var config = new MapperConfiguration(cfg => cfg.AddProfile<StudentMapping>());
             _mapper = config.CreateMapper();
         }
 
+        /// <summary>
+        /// Tests the mapping from <see cref="AddStudentDTO"/> to <see cref="Student"/> to ensure that all properties are correctly mapped.
+        /// </summary>
         [Fact]
         public void Should_Map_AddStudentDTO_To_Student_Correctly()
         {
@@ -37,6 +42,9 @@ namespace StudentService.Tests.Common.Mapping
             Assert.Equal(addStudentDto.Location, student.Location);
         }
 
+        /// <summary>
+        /// Tests the mapping from <see cref="Student"/> to <see cref="ResponseStudentDTO"/> to ensure that all properties are correctly mapped.
+        /// </summary>
         [Fact]
         public void Should_Map_Student_To_ResponseStudentDTO_Correctly()
         {
@@ -58,6 +66,9 @@ namespace StudentService.Tests.Common.Mapping
             Assert.Equal(addStudentDto.Location, responseStudentDto.Location);
         }
 
+        /// <summary>
+        /// Tests that passing a null <see cref="AddStudentDTO"/> to the mapper returns null.
+        /// </summary>
         [Fact]
         public void Should_Handle_Null_AddStudentDTO()
         {
@@ -68,6 +79,9 @@ namespace StudentService.Tests.Common.Mapping
             Assert.Null(student);
         }
 
+        /// <summary>
+        /// Tests that passing a null <see cref="Student"/> to the mapper returns null.
+        /// </summary>
         [Fact]
         public void Should_Handle_Null_Student()
         {
@@ -78,6 +92,9 @@ namespace StudentService.Tests.Common.Mapping
             Assert.Null(responseStudentDto);
         }
 
+        /// <summary>
+        /// Tests that passing an empty <see cref="AddStudentDTO"/> to the mapper returns a new <see cref="Student"/> with default values.
+        /// </summary>
         [Fact]
         public void Should_Handle_Empty_AddStudentDTO()
         {
@@ -97,6 +114,9 @@ namespace StudentService.Tests.Common.Mapping
             Assert.Null(student.Location);
         }
 
+        /// <summary>
+        /// Tests that passing an empty <see cref="Student"/> to the mapper returns a new <see cref="ResponseStudentDTO"/> with default values.
+        /// </summary>
         [Fact]
         public void Should_Handle_Empty_Student()
         {

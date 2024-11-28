@@ -1,19 +1,27 @@
-using Xunit;
 using Moq;
-using StudentService.Services;
 using StudentService.Models;
 using AutoFixture;
 using Moq.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Tests.Helpers;
 
-namespace StudentService.Tests.Services;
+namespace StudentService.Services.Tests;
 public class StudentServicesTests
 {
     private Mock<AppDbContext> _dbContextMock;
     private StudentServices _studentServices;
     private Student _newStudent;
 
+    /// <summary>
+    /// Tests the StudentServices class.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// The constructor sets up a mock of the AppDbContext and creates an instance of StudentServices
+    /// with it. It then uses AutoFixture to create a new Student object with values for Age, Location,
+    /// and Email.
+    /// </para>
+    /// </remarks>
     public StudentServicesTests()
     {
         _dbContextMock = new Mock<AppDbContext>();
@@ -29,6 +37,16 @@ public class StudentServicesTests
         .Create();
     }
 
+    /// <summary>
+    /// Tests the AddStudent method.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// The test sets up a mock of the AppDbContext and creates a fake Student object with
+    /// values for Age, Location, and Email. It then calls the AddStudent method with the
+    /// fake Student and checks that it returns a Student that matches the input.
+    /// </para>
+    /// </remarks>
     [Fact]
     public async Task AddStudent_ShouldAddStudent_WhenStudentIsValid()
     {
@@ -46,7 +64,9 @@ public class StudentServicesTests
 
     }
 
-
+    /// <summary>
+    /// Tests that AddStudent throws an ArgumentNullException when the Student is null.
+    /// </summary>
     [Fact]
     public async Task AddStudent_ShouldThrowArgumentNullException_WhenStudentIsNull()
     {
@@ -58,6 +78,10 @@ public class StudentServicesTests
         await Assert.ThrowsAsync<ArgumentNullException>(() => studentServices.AddStudent(student));
     }
 
+    /// <summary>
+    /// Verifies that the <see cref="AddStudent"/> method throws an <see cref="ApplicationException"/> 
+    /// when a <see cref="Microsoft.EntityFrameworkCore.DbUpdateException"/> occurs during the database update.
+    /// </summary>
     [Fact]
     public async Task AddStudent_ShouldThrowApplicationException_WhenDbUpdateExceptionOccurs()
     {
@@ -69,6 +93,10 @@ public class StudentServicesTests
         await Assert.ThrowsAsync<ApplicationException>(() => _studentServices.AddStudent(_newStudent));
     }
 
+    /// <summary>
+    /// Verifies that the <see cref="AddStudent"/> method throws an <see cref="ApplicationException"/> 
+    /// when an unexpected <see cref="Exception"/> occurs during the database operation.
+    /// </summary>
     [Fact]
     public async Task AddStudent_ShouldThrowApplicationException_WhenOtherExceptionOccurs()
     {
@@ -81,6 +109,9 @@ public class StudentServicesTests
     }
 
 
+    /// <summary>
+    /// Verifies that the <see cref="DeleteStudent"/> method deletes a student when the student exists in the database.
+    /// </summary>
     [Fact]
     public async Task DeleteStudent_ShouldDeleteStudent_WhenStudentExists()
     {
@@ -102,6 +133,9 @@ public class StudentServicesTests
         Assert.True(result);
     }
 
+    /// <summary>
+    /// Verifies that the <see cref="DeleteStudent"/> method returns false when the student does not exist in the database.
+    /// </summary>
     [Fact]
     public async Task DeleteStudent_ShouldReturnFalse_WhenStudentDoesNotExist()
     {
@@ -121,6 +155,10 @@ public class StudentServicesTests
         _dbContextMock.Verify(x => x.SaveChanges(), Times.Never);
         Assert.False(result);
     }
+
+    /// <summary>
+    /// Verifies that the <see cref="DeleteStudent"/> method throws <see cref="ArgumentException"/> when the StudentId is null.
+    /// </summary>
     [Fact]
     public void DeleteStudent_ShouldThrowArgumentException_WhenStudentIdIsNull()
     {
@@ -130,6 +168,9 @@ public class StudentServicesTests
         Assert.Throws<ArgumentException>(() => _studentServices.DeleteStudent(StudentId));
     }
 
+    /// <summary>
+    /// Verifies that the <see cref="DeleteStudent"/> method throws <see cref="ArgumentException"/> when the StudentId is empty.
+    /// </summary>
     [Fact]
     public void DeleteStudent_ShouldThrowArgumentException_WhenStudentIdIsEmpty()
     {
