@@ -1,6 +1,6 @@
 ﻿namespace RegisterStudent.Common
 {
-    public static class StringGenerator
+    public static class StudentNumberGenerator
     {
         public static string Generate()
         {

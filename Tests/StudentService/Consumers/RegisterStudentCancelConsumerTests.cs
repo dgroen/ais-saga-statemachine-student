@@ -3,13 +3,15 @@ using Events.StudentEvents;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 using Moq;
-using StudentService.Consumers;
 using StudentService.Services;
 
-namespace StudentService.Tests.Consumers
+namespace StudentService.Consumers.Tests
 {
     public class RegisterStudentCancelConsumerTests
     {
+        /// <summary>
+        /// Verifies that the <see cref="RegisterStudentCancelConsumer.Consume"/> logs a success message when the student deletion is successful.
+        /// </summary>
         [Fact]
         public async Task Consume_ShouldLogSuccess_WhenStudentIsDeleted()
         {
@@ -36,6 +38,9 @@ namespace StudentService.Tests.Consumers
                 Times.Once);
         }
 
+        /// <summary>
+        /// Verifies that the <see cref="RegisterStudentCancelConsumer.Consume"/> logs a failure message when the student deletion fails.
+        /// </summary>
         [Fact]
         public async Task Consume_ShouldLogFailure_WhenStudentDeletionFails()
         {
@@ -62,6 +67,9 @@ namespace StudentService.Tests.Consumers
                 Times.Once);
         }
 
+        /// <summary>
+        /// Verifies that the <see cref="RegisterStudentCancelConsumer.Consume"/> method does not log any information when the <see cref="ConsumeContext{T}"/> message is null.
+        /// </summary>
         [Fact]
         public async Task Consume_ShouldNotLog_WhenMessageIsNull()
         {
