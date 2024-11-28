@@ -16,6 +16,7 @@ namespace StudentService.Controllers
         private readonly IMapper _mapper;
         private readonly IBus _bus;
 
+
         /// <summary>
         /// Constructor for StudentController.
         /// </summary>
@@ -61,5 +62,6 @@ namespace StudentService.Controllers
             }
             return BadRequest();
         }
+
     }
 }

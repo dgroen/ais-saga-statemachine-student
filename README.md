@@ -149,3 +149,68 @@ In the Scripts folder run the following command:
 ```
 
 
+# StudentService
+
+## Sequence diagram for AddStudent method with error handling
+```Mermaid
+sequenceDiagram
+participant Client
+participant StudentServices
+participant Database
+Client->>StudentServices: AddStudent(student)
+alt Student is null
+    StudentServices-->>Client: Throw ArgumentNullException
+else Student is valid
+    StudentServices->>Database: Save student
+    alt Database save successful
+        Database-->>StudentServices: Student saved
+        StudentServices-->>Client: Return saved student
+    else Database save fails
+        StudentServices-->>Client: Throw ApplicationException
+    end
+end
+```
+
+## Sequence diagram for DeleteStudent method with error handling
+
+```Mermaid
+sequenceDiagram
+participant Client
+participant StudentServices
+participant Database
+Client->>StudentServices: DeleteStudent(studentId)
+alt StudentId is null or empty
+    StudentServices-->>Client: Throw ArgumentException
+else StudentId is valid
+    StudentServices->>Database: Find student
+    alt Student exists
+        StudentServices->>Database: Remove student
+        Database-->>StudentServices: Student deleted
+        StudentServices-->>Client: Return true
+    else Student not found
+        StudentServices-->>Client: Return false
+    end
+end
+```
+
+## Class diagram for StudentServices with updated error handlin
+```Mermaid
+classDiagram
+class StudentServices {
+    +AddStudent(student: Student): Task~Student~
+    +DeleteStudent(StudentId: string): bool
+    -_dbContext: AppDbContext
+}
+class Student {
+    +StudentId: string
+    +Age: int
+    +Email: string
+    +Title: string
+    +RequireDate: DateTime
+    +Location: string
+}
+class AppDbContext {
+    +Student: DbSet~Student~
+}
+StudentServices --> AppDbContext: uses
+```
