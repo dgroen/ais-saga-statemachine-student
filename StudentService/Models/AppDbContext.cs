@@ -9,10 +9,12 @@ namespace StudentService.Models
 
         }
 
+        public AppDbContext() { }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
         }
-        public DbSet<Student> Student { get; set; }
+        public virtual DbSet<Student> Student { get; set; }
     }
 }
