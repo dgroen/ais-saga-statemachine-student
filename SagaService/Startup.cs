@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SagaService.Models;
 using MessageBrokers;
 using System.Net.Mime;
+
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -42,7 +43,7 @@ public class Startup
                 case BrokerTypes.RabbitMQ:
                     x.UsingRabbitMq((_, cfg) =>
                     {
-                        cfg.Host(Configuration.GetConnectionString("RabbitMQ")); 
+                        cfg.Host(Configuration.GetConnectionString("RabbitMQ"));
                         cfg.ConfigureEndpoints(_.GetRequiredService<IBusRegistrationContext>());
                     });
                     break;
