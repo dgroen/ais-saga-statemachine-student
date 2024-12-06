@@ -373,6 +373,5 @@ SagaService/appsettings.json
 MessageBrokers/appsettings.json
 Shared
 docs/implementation_of_saga_orchestration.pdf
-CICD/azuredeploy_sagaservices.json
-CICD/azuredeploy_studentservices.json
-CICD/Kafka/docker-compose.yml
+StudentService/StudentService.xml
+CICD
